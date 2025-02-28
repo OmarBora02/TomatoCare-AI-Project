@@ -1,7 +1,7 @@
 tensorflow
 pandas 
 dvc
-notebok
+notebook
 numpy
 matplotlib
 seaborn
