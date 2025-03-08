@@ -1,6 +1,7 @@
 tensorflow
 pandas 
 dvc
+mlflow
 notebook
 numpy
 matplotlib
@@ -14,4 +15,5 @@ types-pyYAML
 scipy
 Flask
 Flask-Cors
+gdown
 -e .
