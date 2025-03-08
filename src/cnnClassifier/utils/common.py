@@ -87,7 +87,7 @@ def load_json(path: Path) -> ConfigBox:
 
 
 @ensure_annotations
-def save_bin(data: Any, path: Path);
+def save_bin(data: Any, path: Path):
     """Save binary file
     
     Args: 

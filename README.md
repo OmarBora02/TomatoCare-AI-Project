@@ -10,3 +10,6 @@
 7. Update the pipeline
 8. Upadate main.py
 9. Update dvc.yaml
+10. app.py
+
+
