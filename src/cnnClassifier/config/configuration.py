@@ -1,9 +1,12 @@
 from cnnClassifier.constants import *
 import os
+from pathlib import Path
 from cnnClassifier.utils.common import read_yaml, create_directories
 from cnnClassifier.entity.config_entity import (DataIngestionConfig,
                                                 PrepareBaseModelConfig,
-                                                TrainingConfig)
+                                                TrainingConfig,
+                                                EvaluationConfig
+                                                )
 
 
 class ConfigurationManager:
@@ -83,3 +86,16 @@ class ConfigurationManager:
         )
 
         return training_config
+    
+
+
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            model_path=Path("artifacts/training/model.h5"),
+            training_data=Path("artifacts/data_ingestion/TOMATO PROJECT DATASET/train"),
+            validation_data=Path("artifacts/data_ingestion/TOMATO PROJECT DATASET/valid"),
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
+        )
+        return eval_config
