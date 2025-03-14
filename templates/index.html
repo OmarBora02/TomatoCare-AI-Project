@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomato Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://source.unsplash.com/1600x900/?farm,agriculture') no-repeat center center/cover;
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: rgba(0, 100, 0, 0.8);
+            padding: 20px;
+            margin: 50px auto;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            background: #ffcc00;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #333;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        button {
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Tomato Disease Detection</h2>
+        <p>Upload an image of a tomato leaf to detect possible diseases.</p>
+        
+        <label for="imageUpload">Choose Image</label>
+        <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)">
+        
+        <br>
+        <img id="imagePreview" src="#" alt="Image Preview" style="display:none;">
+        
+        <br>
+        <button onclick="predictDisease()">Predict</button>
+        
+        <!-- Dedicated Prediction Result Section -->
+        <div id="predictionSection" style="display: none; margin-top: 20px; padding: 10px; background: #fff; color: #333; border-radius: 5px;">
+            <h3>Prediction Result:</h3>
+            <p id="predictionResult" style="font-size: 18px; font-weight: bold;"></p>
+        </div>
+    </div>
+    
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const preview = document.getElementById('imagePreview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function predictDisease() {
+            const fileInput = document.getElementById('imageUpload');
+            if (!fileInput.files.length) {
+                alert("Please select an image first!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            fetch('/predict', {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Show prediction result section and update text
+                document.getElementById("predictionResult").innerText = data.prediction;
+                document.getElementById("predictionSection").style.display = "block";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+    </script>
+
+</body>
+</html>
